@@ -1,0 +1,38 @@
+/////////////////////////////////////////////////////
+/// COLORS
+/////////////////////////////////////////////////////
+
+$color-primary: #991b1b;
+$color-primary-dark: #450a0a;
+$color-primary-light: #f87171;
+
+$white: #fff;
+$color-text: #333;
+
+/////////////////////////////////////////////////////
+/// GENERAL
+/////////////////////////////////////////////////////
+///
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+  font-family: "Rubik", sans-serif;
+  background-color: #222;
+  font-weight: 300;
+  color: $white;
+  padding: 0 9.6rem;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 3.2rem auto;
+}
