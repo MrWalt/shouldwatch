@@ -2,6 +2,8 @@ export default function App() {
   return (
     <main className="container">
       <Header />
+      <MoviesList />
+      <WatchLaterList />
     </main>
   );
 }
@@ -28,9 +30,9 @@ function Header() {
             r="80"
             fill="none"
             stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="16"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="16"
           />
           <line
             x1="168.57"
@@ -39,9 +41,9 @@ function Header() {
             y2="224"
             fill="none"
             stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="16"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="16"
           />
         </svg>
       </div>
@@ -50,5 +52,78 @@ function Header() {
 }
 
 function MoviesList() {
-  return <div className="movies"></div>;
+  const movies = [
+    {
+      title: "Lord of the Rings",
+      released: 2001,
+      imdbRating: 9.2,
+      image:
+        "https://www.iposters.co.uk/media/catalog/product/t/u/tuxpi.com.1680109492.jpg?width=700&height=1000&store=default&image-type=image",
+    },
+    {
+      title: "Spider-man",
+      released: 2002,
+      imdbRating: 8.7,
+      image:
+        "https://m.media-amazon.com/images/I/61etmpQOO-L._AC_UF894,1000_QL80_.jpg",
+    },
+    {
+      title: "21",
+      released: 2008,
+      imdbRating: 6.8,
+      image:
+        "https://m.media-amazon.com/images/I/51Nm9QUn-GL._AC_UF894,1000_QL80_.jpg",
+    },
+  ];
+
+  return (
+    <div className="results">
+      {movies.map((movie) => (
+        <Movie movie={movie} />
+      ))}
+    </div>
+  );
+}
+
+function WatchLaterList() {
+  return (
+    <div className="later">
+      <div className="later__summary">
+        <span className="later__text">Movies you added</span>
+      </div>
+      <div className="later__movie"></div>
+    </div>
+  );
+}
+
+function Movie({ movie }) {
+  return (
+    <div className="movie">
+      <img src={movie.image} alt={movie.title} className="movie__image" />
+      <div className="movie__info">
+        <span className="movie__title">{movie.title}</span>
+        <p>
+          <span className="movie__rating">
+            {movie.imdbRating}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 256 256"
+              className="movie__icon"
+            >
+              <rect width="256" height="256" fill="none" />
+              <path
+                d="M135.34,28.9l23.23,55.36a8,8,0,0,0,6.67,4.88l59.46,5.14a8,8,0,0,1,4.54,14.07L184.13,147.7a8.08,8.08,0,0,0-2.54,7.89l13.52,58.54a8,8,0,0,1-11.89,8.69l-51.1-31a7.93,7.93,0,0,0-8.24,0l-51.1,31a8,8,0,0,1-11.89-8.69l13.52-58.54a8.08,8.08,0,0,0-2.54-7.89L26.76,108.35A8,8,0,0,1,31.3,94.28l59.46-5.14a8,8,0,0,0,6.67-4.88L120.66,28.9A8,8,0,0,1,135.34,28.9Z"
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="16"
+              />
+            </svg>
+          </span>
+        </p>
+        <span className="movie__released">{movie.released}</span>
+      </div>
+    </div>
+  );
 }

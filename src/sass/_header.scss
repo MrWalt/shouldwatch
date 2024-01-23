@@ -12,6 +12,8 @@
   justify-content: center;
   gap: 1.2rem;
 
+  grid-column: 1 / -1;
+
   &__container {
     position: relative;
   }
