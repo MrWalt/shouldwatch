@@ -6,19 +6,43 @@ export default function App() {
   const [selectedMovie, setSelectedMovie] = useState("");
 
   const API_KEY = "ad8548a2";
-  useEffect(function () {
-    async function fetchMovies() {
-      const res = await fetch(
-        `http://www.omdbapi.com/?apikey=${API_KEY}&s=spider-man`
-      );
-      const data = await res.json();
 
-      // setMovies(data.Search);
-    }
-    fetchMovies();
-  }, []);
+  useEffect(
+    function () {
+      const controller = new AbortController();
+      async function fetchMovies() {
+        try {
+          const res = await fetch(
+            `http://www.omdbapi.com/?apikey=${API_KEY}&s=${searchQuery}`,
+            {
+              signal: controller.signal,
+            }
+          );
+          if (!res.ok) throw new Error("There was an error, try again");
 
-  // `http://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`,
+          const data = await res.json();
+
+          if (data.Response === "False") throw new Error("Movie not found");
+
+          console.log(data);
+          setMovies(data.Search);
+        } catch (err) {
+          console.log(err.message);
+        }
+      }
+
+      if (searchQuery.length < 3) {
+        setMovies([]);
+      }
+
+      fetchMovies();
+      return function () {
+        controller.abort();
+      };
+    },
+    [searchQuery]
+  );
+
   return (
     <main className="container">
       <Header searchQuery={searchQuery} onSetSearchQuery={setSearchQuery} />
@@ -77,7 +101,7 @@ function MoviesList({ movies }) {
   return (
     <div className="results">
       {movies.map((movie) => (
-        <Movie movie={movie} key={movie.title} />
+        <Movie movie={movie} key={movie.imdbID} />
       ))}
     </div>
   );
@@ -145,13 +169,19 @@ function MovieDetails({ movie }) {
 }
 
 function Movie({ movie }) {
+  const newMovie = {
+    title: movie.Title,
+    image: movie.Poster,
+    released: movie.Year,
+  };
+
   return (
     <div className="movie">
-      <img src={movie.image} alt={movie.title} className="movie__image" />
+      <img src={newMovie.image} alt={newMovie.title} className="movie__image" />
       <div className="movie__info">
-        <span className="movie__title">{movie.title}</span>
+        <span className="movie__title">{newMovie.title}</span>
         <p>
-          <span className="movie__rating">
+          {/* <span className="movie__rating">
             {movie.imdbRating}
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -168,10 +198,10 @@ function Movie({ movie }) {
                 strokeWidth="16"
               />
             </svg>
-          </span>
+          </span> */}
         </p>
-        <span className="movie__released">{movie.released}</span>
-        <span className="movie__duration">{movie.duration} min</span>
+        <span className="movie__released">{newMovie.released}</span>
+        {/* <span className="movie__duration">{movie.duration} min</span> */}
       </div>
     </div>
   );
