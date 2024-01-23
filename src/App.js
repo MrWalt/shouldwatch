@@ -59,6 +59,7 @@ function MoviesList() {
       imdbRating: 9.2,
       image:
         "https://www.iposters.co.uk/media/catalog/product/t/u/tuxpi.com.1680109492.jpg?width=700&height=1000&store=default&image-type=image",
+      duration: 189,
     },
     {
       title: "Spider-man",
@@ -66,6 +67,7 @@ function MoviesList() {
       imdbRating: 8.7,
       image:
         "https://m.media-amazon.com/images/I/61etmpQOO-L._AC_UF894,1000_QL80_.jpg",
+      duration: 129,
     },
     {
       title: "21",
@@ -73,13 +75,14 @@ function MoviesList() {
       imdbRating: 6.8,
       image:
         "https://m.media-amazon.com/images/I/51Nm9QUn-GL._AC_UF894,1000_QL80_.jpg",
+      duration: 170,
     },
   ];
 
   return (
     <div className="results">
       {movies.map((movie) => (
-        <Movie movie={movie} />
+        <Movie movie={movie} key={movie.title} />
       ))}
     </div>
   );
@@ -88,12 +91,19 @@ function MoviesList() {
 function WatchLaterList() {
   return (
     <div className="later">
-      <div className="later__summary">
-        <span className="later__text">Movies you added</span>
+      <div className="later__summary__container">
+        <span className="later__text">Movies and Shows you added</span>
+        <div className="later__summary">
+          <span className="later__movies">3 movies</span>
+          <span className="later__time">401 min</span>
+        </div>
       </div>
-      <div className="later__movie"></div>
     </div>
   );
+}
+
+function MovieDetails() {
+  return <div className="details"></div>;
 }
 
 function Movie({ movie }) {
@@ -123,6 +133,7 @@ function Movie({ movie }) {
           </span>
         </p>
         <span className="movie__released">{movie.released}</span>
+        <span className="movie__duration">{movie.duration} min</span>
       </div>
     </div>
   );
