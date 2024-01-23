@@ -30,8 +30,9 @@
     width: 95%;
     height: 9.2rem;
     margin: 0 auto;
-
+    margin-bottom: 1rem;
     padding: 1.2rem 0;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -84,35 +85,16 @@
   }
 
   &__title {
-    display: inline-block;
     margin-top: 0.8rem;
 
     font-weight: 600;
     font-size: 1.8rem;
   }
 
-  &__rating {
-    display: inline-block;
-    margin-top: 0.6rem;
-    font-size: 1.6rem;
-  }
-
-  &__icon {
-    width: 1.6rem;
-    margin-left: 0.4rem;
-    transform: translateY(2px);
-  }
-
   &__released {
     display: inline-block;
     margin-top: 0.8rem;
     font-size: 1.6rem;
-  }
-
-  &__duration {
-    display: inline-block;
-    margin-left: 1.2rem;
-    font-size: 1.2rem;
   }
 }
 
@@ -148,16 +130,18 @@
   &__title {
     display: inline-block;
 
+    font-weight: 500;
     font-size: 1.8rem;
     margin-bottom: 1.2rem;
   }
 
-  &__year {
+  &__year,
+  &__director {
     font-size: 1.4rem;
     margin-bottom: 0.2rem;
   }
 
-  &__director {
+  &__runtime {
     font-size: 1.4rem;
   }
 
@@ -173,7 +157,7 @@
 
   &__description {
     font-size: 1.6rem;
-    padding: 2.4rem;
+    padding: 3.2rem;
     height: 100%;
   }
 
@@ -195,4 +179,11 @@
       transform: translateY(-3px);
     }
   }
+}
+
+.loader {
+  font-size: 2.4rem;
+  font-weight: 500;
+  margin-top: 1.6rem;
+  text-align: center;
 }
