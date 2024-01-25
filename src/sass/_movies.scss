@@ -1,3 +1,20 @@
+.later__container {
+  justify-self: start;
+  width: 40rem;
+
+  @include respond(tab-landscape-small) {
+    justify-self: center;
+  }
+
+  @include respond(phone) {
+    width: 36rem;
+  }
+
+  @include respond(phone-small) {
+    width: 34rem;
+  }
+}
+
 .results,
 .later {
   background-color: $color-text;
@@ -12,6 +29,16 @@
   scrollbar-width: none;
   -ms-overflow-style: none;
 
+  position: relative;
+
+  @include respond(phone) {
+    width: 36rem;
+  }
+
+  @include respond(phone-small) {
+    width: 34rem;
+  }
+
   &::-webkit-scrollbar {
     display: none;
   }
@@ -25,26 +52,38 @@
   }
 }
 
-.later {
-  justify-self: start;
-  padding: 1rem 0;
-  position: relative;
+.later__summary {
+  background-color: #222;
+  border: 3px solid $color-primary;
+  border-radius: 8px 8px 0 0;
+  width: 40rem;
+  height: 9.2rem;
+  padding: 1.6rem 0;
 
-  @include respond(tab-landscape-small) {
-    justify-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+
+  align-self: start;
+  position: absolute;
+  z-index: 999;
+
+  @include respond(phone) {
+    width: 36rem;
   }
 
-  &__summary__container {
-    background-color: #222;
-    border: 3px solid $color-primary;
-    border-radius: 8px 8px 0 0;
-    width: 38rem;
-    height: 9.2rem;
-    margin: 0 auto;
-    margin-bottom: 1rem;
-    padding: 1.2rem 0;
-    position: absolute;
-    margin-left: 1rem;
+  @include respond(phone-small) {
+    width: 34rem;
+  }
+
+  .later {
+    justify-self: start;
+    padding: 1rem 0;
+
+    @include respond(tab-landscape-small) {
+      justify-self: center;
+    }
 
     display: flex;
     flex-direction: column;
@@ -57,14 +96,20 @@
     margin-top: 10.2rem;
   }
 
+  &__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.8rem;
+  }
+
   &__text {
     font-size: 1.8rem;
     font-weight: 400;
   }
 
-  &__summary {
-    display: flex;
-    gap: 3.2rem;
+  &__heading {
+    font-size: 1.8rem;
   }
 
   &__movies {
@@ -126,7 +171,7 @@
 .details {
   background-color: #222;
   border: 2px solid $color-primary;
-  border-radius: 12px;
+  border-radius: 8px;
 
   width: 95%;
   height: 100%;
@@ -142,8 +187,8 @@
     background-color: #fff;
     border-radius: 50%;
     border: 2px solid #222;
-    width: 3rem;
-    height: 3rem;
+    width: 3.4rem;
+    height: 3.4rem;
     cursor: pointer;
 
     display: flex;
@@ -157,7 +202,7 @@
 
     &-icon {
       color: #333;
-      width: 2.2rem;
+      width: 2.4rem;
     }
   }
 
@@ -237,4 +282,12 @@
   font-weight: 500;
   margin-top: 1.6rem;
   text-align: center;
+}
+
+.later {
+  padding: 10.2rem 0 1.6rem 0;
+}
+
+.later__detail-open {
+  padding: 1.6rem 0;
 }

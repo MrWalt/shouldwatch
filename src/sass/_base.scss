@@ -24,6 +24,18 @@ $color-text: #333;
       @content;
     }
   }
+
+  @if $breakpoint == phone {
+    @media only screen and (max-width: 29rem) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == phone-small {
+    @media only screen and (max-width: 21rem) {
+      @content;
+    }
+  }
 }
 
 /////////////////////////////////////////////////////
@@ -41,6 +53,14 @@ html {
 
   @include respond(tab-landscape) {
     font-size: 56%;
+  }
+
+  @include respond(phone) {
+    font-size: 50%;
+  }
+
+  @include respond(phone-small) {
+    font-size: 46.5%;
   }
 }
 

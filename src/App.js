@@ -109,24 +109,30 @@ export default function App() {
         )}
         {error && <Error message={error} />}
       </Box>
-      <Box className={"later"}>
-        {selectedMovie ? (
-          <MovieDetails
-            selectedID={selectedMovie}
-            onWatchLater={handleWatchLater}
-            watchLater={watchLater}
-            onDeleteWatchLater={handleDeleteWatchLater}
-            onCloseMovie={handleCloseMovie}
-          />
-        ) : (
-          <WatchLaterList
-            watchLater={watchLater}
-            onSelectMovie={handleSelectMovie}
-          >
-            <Summary numMovies={watchLater?.length} watchTime={watchTime} />
-          </WatchLaterList>
+      <div className="later__container">
+        {!selectedMovie && (
+          <Summary numMovies={watchLater?.length} watchTime={watchTime} />
         )}
-      </Box>
+
+        <Box
+          className={`${selectedMovie ? "later later__detail-open" : "later"}`}
+        >
+          {selectedMovie ? (
+            <MovieDetails
+              selectedID={selectedMovie}
+              onWatchLater={handleWatchLater}
+              watchLater={watchLater}
+              onDeleteWatchLater={handleDeleteWatchLater}
+              onCloseMovie={handleCloseMovie}
+            />
+          ) : (
+            <WatchLaterList
+              watchLater={watchLater}
+              onSelectMovie={handleSelectMovie}
+            ></WatchLaterList>
+          )}
+        </Box>
+      </div>
     </main>
   );
 }

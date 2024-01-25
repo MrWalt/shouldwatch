@@ -12,6 +12,16 @@ html {
     font-size: 56%;
   }
 }
+@media only screen and (max-width: 29rem) {
+  html {
+    font-size: 50%;
+  }
+}
+@media only screen and (max-width: 21rem) {
+  html {
+    font-size: 46.5%;
+  }
+}
 
 body {
   box-sizing: border-box;
@@ -85,6 +95,17 @@ body {
   width: 36rem;
   box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0.1);
 }
+@media only screen and (max-width: 29rem) {
+  .header__input {
+    width: 100vw;
+    border-radius: 0;
+    padding: 1.2rem 2.4rem;
+  }
+  .header__input:focus {
+    width: 100vw;
+    box-shadow: 0px 0px 8px 4px rgba(0, 0, 0, 0);
+  }
+}
 .header__icon {
   width: 2rem;
   color: #991b1b;
@@ -93,11 +114,36 @@ body {
   right: 0;
   transform: translate(-50%, 30%);
 }
+@media only screen and (max-width: 29rem) {
+  .header__icon {
+    transform: translate(-50%, 50%);
+  }
+}
 
 .heading-primary {
   font-size: 3.2rem;
   font-weight: 700;
   color: #fff;
+}
+
+.later__container {
+  justify-self: start;
+  width: 40rem;
+}
+@media only screen and (max-width: 52em) {
+  .later__container {
+    justify-self: center;
+  }
+}
+@media only screen and (max-width: 29rem) {
+  .later__container {
+    width: 36rem;
+  }
+}
+@media only screen and (max-width: 21rem) {
+  .later__container {
+    width: 34rem;
+  }
 }
 
 .results,
@@ -111,6 +157,19 @@ body {
   overflow: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  position: relative;
+}
+@media only screen and (max-width: 29rem) {
+  .results,
+  .later {
+    width: 36rem;
+  }
+}
+@media only screen and (max-width: 21rem) {
+  .results,
+  .later {
+    width: 34rem;
+  }
 }
 .results::-webkit-scrollbar,
 .later::-webkit-scrollbar {
@@ -126,48 +185,65 @@ body {
   }
 }
 
-.later {
-  justify-self: start;
-  padding: 1rem 0;
-  position: relative;
-}
-@media only screen and (max-width: 52em) {
-  .later {
-    justify-self: center;
-  }
-}
-.later__summary__container {
+.later__summary {
   background-color: #222;
   border: 3px solid #991b1b;
   border-radius: 8px 8px 0 0;
-  width: 38rem;
+  width: 40rem;
   height: 9.2rem;
-  margin: 0 auto;
-  margin-bottom: 1rem;
-  padding: 1.2rem 0;
+  padding: 1.6rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  align-self: start;
   position: absolute;
-  margin-left: 1rem;
+  z-index: 999;
+}
+@media only screen and (max-width: 29rem) {
+  .later__summary {
+    width: 36rem;
+  }
+}
+@media only screen and (max-width: 21rem) {
+  .later__summary {
+    width: 34rem;
+  }
+}
+.later__summary .later {
+  justify-self: start;
+  padding: 1rem 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 1.6rem;
 }
-.later .movie:nth-child(2) {
+@media only screen and (max-width: 52em) {
+  .later__summary .later {
+    justify-self: center;
+  }
+}
+.later__summary .movie:nth-child(2) {
   margin-top: 10.2rem;
 }
-.later__text {
+.later__summary__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.8rem;
+}
+.later__summary__text {
   font-size: 1.8rem;
   font-weight: 400;
 }
-.later__summary {
-  display: flex;
-  gap: 3.2rem;
+.later__summary__heading {
+  font-size: 1.8rem;
 }
-.later__movies {
+.later__summary__movies {
   font-size: 1.6rem;
 }
-.later__time {
+.later__summary__time {
   font-size: 1.6rem;
 }
 
@@ -212,7 +288,7 @@ body {
 .details {
   background-color: #222;
   border: 2px solid #991b1b;
-  border-radius: 12px;
+  border-radius: 8px;
   width: 95%;
   height: 100%;
   margin: 0 auto;
@@ -225,8 +301,8 @@ body {
   background-color: #fff;
   border-radius: 50%;
   border: 2px solid #222;
-  width: 3rem;
-  height: 3rem;
+  width: 3.4rem;
+  height: 3.4rem;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -238,7 +314,7 @@ body {
 }
 .details__back-btn-icon {
   color: #333;
-  width: 2.2rem;
+  width: 2.4rem;
 }
 .details__heading {
   height: 20rem;
@@ -302,6 +378,14 @@ body {
   font-weight: 500;
   margin-top: 1.6rem;
   text-align: center;
+}
+
+.later {
+  padding: 10.2rem 0 1.6rem 0;
+}
+
+.later__detail-open {
+  padding: 1.6rem 0;
 }
 
 /*# sourceMappingURL=index.css.map */
