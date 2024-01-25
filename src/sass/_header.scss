@@ -3,7 +3,11 @@
   height: 12rem;
   padding: 1.6rem 0;
 
-  background-color: $color-primary;
+  background-image: linear-gradient(
+    to left,
+    $color-primary 35%,
+    $color-primary-dark
+  );
   border-radius: 16px;
 
   display: flex;

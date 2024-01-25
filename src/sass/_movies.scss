@@ -1,8 +1,9 @@
 .results,
 .later {
-  background-color: #333;
+  background-color: $color-text;
   border-radius: 16px;
-  width: 70%;
+  box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, 0.11);
+  width: 40rem;
   height: 64rem;
 
   padding: 1.6rem 0;
@@ -23,15 +24,19 @@
 .later {
   justify-self: start;
   padding: 1rem 0;
+  position: relative;
 
   &__summary__container {
     background-color: #222;
-    border-radius: 12px;
-    width: 95%;
+    border: 3px solid $color-primary;
+    border-radius: 12px 12px 0 0;
+    width: 38rem;
     height: 9.2rem;
     margin: 0 auto;
     margin-bottom: 1rem;
     padding: 1.2rem 0;
+    position: fixed;
+    margin-left: 1rem;
 
     display: flex;
     flex-direction: column;
@@ -40,8 +45,13 @@
     gap: 1.6rem;
   }
 
+  & .movie:nth-child(2) {
+    margin-top: 10.2rem;
+  }
+
   &__text {
     font-size: 1.8rem;
+    font-weight: 400;
   }
 
   &__summary {

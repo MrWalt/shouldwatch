@@ -1,4 +1,4 @@
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useState } from "react";
 
 const API_KEY = "ad8548a2";
 
@@ -9,13 +9,24 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [watchLater, setWatchLater] = useState([]);
 
+  const watchTime = watchLater
+    .map((movie) => movie.Runtime.split(" ").at(0))
+    .reduce((acc, cur) => acc + Number(cur), 0);
+
   function handleSelectMovie(movie) {
     setSelectedMovie(movie);
   }
 
   function handleWatchLater(movie) {
     setWatchLater([...watchLater, movie]);
-    setSelectedMovie("");
+    handleCloseMovie();
+  }
+
+  function handleDeleteWatchLater(deleteID) {
+    setWatchLater((watchLater) =>
+      watchLater.filter((movie) => movie.imdbID !== deleteID)
+    );
+    handleCloseMovie();
   }
 
   function handleCloseMovie() {
@@ -65,18 +76,30 @@ export default function App() {
   return (
     <main className="container">
       <Header searchQuery={searchQuery} onSetSearchQuery={setSearchQuery} />
-      <MoviesList
-        movies={movies}
-        isLoading={isLoading}
-        onSelectMovie={handleSelectMovie}
-      />
-      <WatchLaterList
-        movie={selectedMovie}
-        selectedID={selectedMovie}
-        watchLater={watchLater}
-        onWatchLater={handleWatchLater}
-        onCloseMovie={handleCloseMovie}
-      />
+      <Box className={"results"}>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <MoviesList movies={movies} onSelectMovie={handleSelectMovie} />
+        )}
+      </Box>
+      <Box className={"later"}>
+        {selectedMovie ? (
+          <MovieDetails
+            selectedID={selectedMovie}
+            onWatchLater={handleWatchLater}
+            watchLater={watchLater}
+            onDeleteWatchLater={handleDeleteWatchLater}
+          />
+        ) : (
+          <WatchLaterList
+            watchLater={watchLater}
+            onSelectMovie={handleSelectMovie}
+          >
+            <Summary numMovies={watchLater?.length} watchTime={watchTime} />
+          </WatchLaterList>
+        )}
+      </Box>
     </main>
   );
 }
@@ -130,58 +153,88 @@ function Loader() {
   return <p className="loader">Loading...</p>;
 }
 
-function MoviesList({ movies, isLoading, onSelectMovie }) {
+function Box({ className, children }) {
+  return <div className={className}>{children}</div>;
+}
+
+function MoviesList({ movies, onSelectMovie }) {
   return (
-    <div className="results">
-      {isLoading ? (
-        <Loader />
-      ) : (
-        movies.map((movie) => (
-          <Movie
-            movie={movie}
-            onSelectMovie={onSelectMovie}
-            key={movie.imdbID}
-          />
-        ))
-      )}
-    </div>
+    <>
+      {movies.map((movie) => (
+        <Movie movie={movie} onSelectMovie={onSelectMovie} key={movie.imdbID} />
+      ))}
+    </>
   );
 }
 
-function WatchLaterList({
-  movie,
-  selectedID,
-  watchLater,
-  onWatchLater,
-  onCloseMovie,
-}) {
+function Summary({ numMovies, watchTime }) {
   return (
-    <div className="later">
-      {movie ? (
-        <MovieDetails
-          movie={movie}
-          selectedID={selectedID}
-          onWatchLater={onWatchLater}
-          onCloseMovie={onCloseMovie}
-        />
-      ) : (
-        <div className="later__summary__container">
+    <div className="later__summary__container">
+      {numMovies ? (
+        <>
           <span className="later__text">Movies and Shows you added</span>
           <div className="later__summary">
-            <span className="later__movies">3 movies</span>
-            <span className="later__time">401 min</span>
+            <span className="later__movies">
+              {numMovies} {numMovies > 1 ? "movies" : "movie"}
+            </span>
+            <span className="later__time">{watchTime} min</span>
           </div>
-        </div>
+        </>
+      ) : (
+        <span className="later__text">You havent added any movies</span>
       )}
-      {watchLater &&
-        watchLater.map((movie) => <Movie movie={movie} key={movie.imdbID} />)}
     </div>
   );
 }
 
-function MovieDetails({ selectedID, onWatchLater }) {
+function WatchLaterList({ watchLater, onSelectMovie, children }) {
+  return (
+    <>
+      {children}
+      {watchLater &&
+        watchLater.map((movie) => (
+          <Movie
+            movie={movie}
+            key={movie.imdbID}
+            onSelectMovie={onSelectMovie}
+          />
+        ))}
+    </>
+  );
+}
+
+function Star({ className }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 256 256"
+      className={className}
+    >
+      <rect width="256" height="256" fill="none" />
+      <path
+        d="M135.34,28.9l23.23,55.36a8,8,0,0,0,6.67,4.88l59.46,5.14a8,8,0,0,1,4.54,14.07L184.13,147.7a8.08,8.08,0,0,0-2.54,7.89l13.52,58.54a8,8,0,0,1-11.89,8.69l-51.1-31a7.93,7.93,0,0,0-8.24,0l-51.1,31a8,8,0,0,1-11.89-8.69l13.52-58.54a8.08,8.08,0,0,0-2.54-7.89L26.76,108.35A8,8,0,0,1,31.3,94.28l59.46-5.14a8,8,0,0,0,6.67-4.88L120.66,28.9A8,8,0,0,1,135.34,28.9Z"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="16"
+      />
+    </svg>
+  );
+}
+
+function MovieDetails({
+  selectedID,
+  onWatchLater,
+  watchLater,
+  onDeleteWatchLater,
+}) {
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+
+  const isWatched = watchLater
+    ?.map((movie) => movie.imdbID)
+    .includes(selectedID);
 
   useEffect(
     function () {
@@ -226,33 +279,27 @@ function MovieDetails({ selectedID, onWatchLater }) {
               </span>
               <span className="details__runtime">{movie.Runtime} runtime</span>
               <span className="details__rating">
-                Rated {movie.imdbRating}{" "}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 256 256"
-                  className="details__icon"
-                >
-                  <rect width="256" height="256" fill="none" />
-                  <path
-                    d="M135.34,28.9l23.23,55.36a8,8,0,0,0,6.67,4.88l59.46,5.14a8,8,0,0,1,4.54,14.07L184.13,147.7a8.08,8.08,0,0,0-2.54,7.89l13.52,58.54a8,8,0,0,1-11.89,8.69l-51.1-31a7.93,7.93,0,0,0-8.24,0l-51.1,31a8,8,0,0,1-11.89-8.69l13.52-58.54a8.08,8.08,0,0,0-2.54-7.89L26.76,108.35A8,8,0,0,1,31.3,94.28l59.46-5.14a8,8,0,0,0,6.67-4.88L120.66,28.9A8,8,0,0,1,135.34,28.9Z"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="16"
-                  />
-                </svg>{" "}
-                on IMDB
+                Rated {movie.imdbRating} <Star className={"details__icon"} /> on
+                IMDB
               </span>
             </div>
           </div>
           <p className="details__description">{movie.Plot}</p>
-          <button
-            className="details__add-btn"
-            onClick={() => onWatchLater(movie)}
-          >
-            Add Movie
-          </button>
+          {isWatched ? (
+            <button
+              className="details__add-btn"
+              onClick={() => onDeleteWatchLater(movie.imdbID)}
+            >
+              Delete Movie
+            </button>
+          ) : (
+            <button
+              className="details__add-btn"
+              onClick={() => onWatchLater(movie)}
+            >
+              Add Movie
+            </button>
+          )}
         </>
       )}
     </div>
