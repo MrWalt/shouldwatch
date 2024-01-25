@@ -7,10 +7,17 @@ export default function App() {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [watchLater, setWatchLater] = useState([]);
+  const [error, setError] = useState("");
+  const [watchLater, setWatchLater] = useState(function () {
+    const storedData = localStorage.getItem("watchLater");
+
+    return JSON.parse(storedData);
+  });
 
   const watchTime = watchLater
-    .map((movie) => movie.Runtime.split(" ").at(0))
+    .map((movie) =>
+      movie.Runtime !== "N/A" ? movie.Runtime.split(" ").at(0) : ""
+    )
     .reduce((acc, cur) => acc + Number(cur), 0);
 
   function handleSelectMovie(movie) {
@@ -35,10 +42,18 @@ export default function App() {
 
   useEffect(
     function () {
+      localStorage.setItem("watchLater", JSON.stringify(watchLater));
+    },
+    [watchLater]
+  );
+
+  useEffect(
+    function () {
       const controller = new AbortController();
       async function fetchMovies() {
         try {
           setIsLoading(true);
+          setError("");
 
           const res = await fetch(
             `http://www.omdbapi.com/?apikey=${API_KEY}&s=${searchQuery}`,
@@ -50,11 +65,13 @@ export default function App() {
 
           const data = await res.json();
 
+          console.log(data.Response);
           if (data.Response === "False") throw new Error("Movie not found");
 
           setMovies(data.Search);
+          setError("");
         } catch (err) {
-          if (err.name !== "AbortError") console.log(err.message);
+          if (err.name !== "AbortError") setError(err.message);
         } finally {
           setIsLoading(false);
         }
@@ -63,8 +80,10 @@ export default function App() {
       if (searchQuery.length < 3) {
         setMovies([]);
       }
+
       handleCloseMovie();
       fetchMovies();
+
       return function () {
         controller.abort();
       };
@@ -76,11 +95,11 @@ export default function App() {
     <main className="container">
       <Header searchQuery={searchQuery} onSetSearchQuery={setSearchQuery} />
       <Box className={"results"}>
-        {isLoading ? (
-          <Loader />
-        ) : (
+        {isLoading && <Loader />}
+        {!isLoading && !error && (
           <MoviesList movies={movies} onSelectMovie={handleSelectMovie} />
         )}
+        {error && <Error message={error} />}
       </Box>
       <Box className={"later"}>
         {selectedMovie ? (
@@ -177,6 +196,10 @@ function Header({ searchQuery, onSetSearchQuery }) {
       </div>
     </div>
   );
+}
+
+function Error({ message }) {
+  return <p className="error">{message}</p>;
 }
 
 function Loader() {

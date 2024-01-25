@@ -258,7 +258,8 @@ body {
   transform: translateY(-3px);
 }
 
-.loader {
+.loader,
+.error {
   font-size: 2.4rem;
   font-weight: 500;
   margin-top: 1.6rem;
