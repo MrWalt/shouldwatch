@@ -7,6 +7,11 @@
 html {
   font-size: 62.5%;
 }
+@media only screen and (max-width: 64em) {
+  html {
+    font-size: 56%;
+  }
+}
 
 body {
   box-sizing: border-box;
@@ -16,6 +21,17 @@ body {
   color: #fff;
   padding: 0 9.6rem;
 }
+@media only screen and (max-width: 64em) {
+  body {
+    padding: 0 4.8rem;
+  }
+}
+@media only screen and (max-width: 52em) {
+  body {
+    padding: 0;
+    padding-bottom: 3.6rem;
+  }
+}
 
 .container {
   max-width: 1200px;
@@ -24,6 +40,13 @@ body {
   grid-template-columns: 1fr 1fr;
   row-gap: 6.4rem;
   column-gap: 3.2rem;
+}
+@media only screen and (max-width: 52em) {
+  .container {
+    margin: 0;
+    width: 100%;
+    grid-template-columns: 1fr;
+  }
 }
 
 .header {
@@ -38,6 +61,11 @@ body {
   justify-content: center;
   gap: 1.2rem;
   grid-column: 1/-1;
+}
+@media only screen and (max-width: 52em) {
+  .header {
+    border-radius: 0;
+  }
 }
 .header__container {
   position: relative;
@@ -75,7 +103,7 @@ body {
 .results,
 .later {
   background-color: #333;
-  border-radius: 16px;
+  border-radius: 8px;
   box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, 0.11);
   width: 40rem;
   height: 64rem;
@@ -92,22 +120,32 @@ body {
 .results {
   justify-self: end;
 }
+@media only screen and (max-width: 52em) {
+  .results {
+    justify-self: center;
+  }
+}
 
 .later {
   justify-self: start;
   padding: 1rem 0;
   position: relative;
 }
+@media only screen and (max-width: 52em) {
+  .later {
+    justify-self: center;
+  }
+}
 .later__summary__container {
   background-color: #222;
   border: 3px solid #991b1b;
-  border-radius: 12px 12px 0 0;
+  border-radius: 8px 8px 0 0;
   width: 38rem;
   height: 9.2rem;
   margin: 0 auto;
   margin-bottom: 1rem;
   padding: 1.2rem 0;
-  position: fixed;
+  position: absolute;
   margin-left: 1rem;
   display: flex;
   flex-direction: column;

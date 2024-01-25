@@ -8,11 +8,28 @@ $color-primary-light: #f87171;
 
 $white: #fff;
 $color-text: #333;
+/////////////////////////////////////////////////////
+/// RESPONSIVE MIXINS
+/////////////////////////////////////////////////////
+
+@mixin respond($breakpoint) {
+  @if $breakpoint == tab-landscape {
+    @media only screen and (max-width: 64em) {
+      @content;
+    }
+  }
+
+  @if $breakpoint == tab-landscape-small {
+    @media only screen and (max-width: 52em) {
+      @content;
+    }
+  }
+}
 
 /////////////////////////////////////////////////////
 /// GENERAL
 /////////////////////////////////////////////////////
-///
+
 * {
   margin: 0;
   padding: 0;
@@ -21,6 +38,10 @@ $color-text: #333;
 
 html {
   font-size: 62.5%;
+
+  @include respond(tab-landscape) {
+    font-size: 56%;
+  }
 }
 
 body {
@@ -30,6 +51,15 @@ body {
   font-weight: 300;
   color: $white;
   padding: 0 9.6rem;
+
+  @include respond(tab-landscape) {
+    padding: 0 4.8rem;
+  }
+
+  @include respond(tab-landscape-small) {
+    padding: 0;
+    padding-bottom: 3.6rem;
+  }
 }
 
 .container {
@@ -40,4 +70,10 @@ body {
   grid-template-columns: 1fr 1fr;
   row-gap: 6.4rem;
   column-gap: 3.2rem;
+
+  @include respond(tab-landscape-small) {
+    margin: 0;
+    width: 100%;
+    grid-template-columns: 1fr;
+  }
 }

@@ -18,6 +18,10 @@
 
   grid-column: 1 / -1;
 
+  @include respond(tab-landscape-small) {
+    border-radius: 0;
+  }
+
   &__container {
     position: relative;
   }
