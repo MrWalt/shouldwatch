@@ -82,7 +82,7 @@ export default function MovieDetails({
           <ButtonBack onCloseMovie={onCloseMovie} />
           {isWatched ? (
             <button
-              className="details__add-btn"
+              className="details__delete-btn"
               onClick={() => onDeleteWatchLater(movie.imdbID)}
             >
               Delete Movie

@@ -362,7 +362,7 @@ body {
   padding: 3.2rem;
   height: 100%;
 }
-.details__add-btn {
+.details__add-btn, .details__delete-btn {
   border: none;
   border-radius: 24px;
   width: 70%;
@@ -375,9 +375,13 @@ body {
   align-self: center;
   margin-bottom: 2.4rem;
   transition: all 0.2s;
+  color: #333;
 }
-.details__add-btn:hover {
+.details__add-btn:hover, .details__delete-btn:hover {
   transform: translateY(-3px);
+}
+.details__delete-btn {
+  color: #991b1b;
 }
 
 .loader,

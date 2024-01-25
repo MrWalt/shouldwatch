@@ -11,10 +11,6 @@ import Footer from "./components/Footer";
 
 export const API_KEY = "ad8548a2";
 
-const data = [];
-if (!localStorage.getItem("watchlater") === "[]")
-  localStorage.setItem("watchLater", JSON.stringify(data));
-
 export default function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [movies, setMovies] = useState([]);
@@ -23,8 +19,10 @@ export default function App() {
   const [error, setError] = useState("");
 
   const [watchLater, setWatchLater] = useState(function () {
-    const storedData = localStorage.getItem("watchLater");
-
+    let storedData = localStorage.getItem("watchLater");
+    if (storedData === null)
+      localStorage.setItem("watchLater", JSON.stringify([]));
+    storedData = localStorage.getItem("watchLater");
     return JSON.parse(storedData);
   });
 
