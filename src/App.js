@@ -20,7 +20,7 @@ export default function App() {
 
   const [watchLater, setWatchLater] = useState(function () {
     let storedData = localStorage.getItem("watchLater");
-    if (storedData === null)
+    if (JSON.parse(storedData) === null)
       localStorage.setItem("watchLater", JSON.stringify([]));
     storedData = localStorage.getItem("watchLater");
     return JSON.parse(storedData);
