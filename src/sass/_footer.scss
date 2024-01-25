@@ -1,0 +1,38 @@
+.footer {
+  background-image: linear-gradient(
+    to left,
+    $color-primary 35%,
+    $color-primary-dark
+  );
+  border-radius: 4px;
+  height: 4.8rem;
+  padding: 1.8rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @include respond(tab-landscape-small) {
+    border-radius: 0;
+  }
+
+  &__text {
+    font-size: 1.6rem;
+    font-weight: 300;
+  }
+
+  &__link:link,
+  &__link:visited {
+    display: inline-block;
+    color: inherit;
+    font-size: 1.6rem;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 0.6rem;
+  }
+
+  &__icon {
+    margin-left: 1rem;
+    width: 1.4rem;
+    transform: scale(1.5);
+  }
+}

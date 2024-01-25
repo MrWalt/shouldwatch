@@ -22,6 +22,10 @@
     border-radius: 0;
   }
 
+  @include respond(phone) {
+    height: 14rem;
+  }
+
   &__container {
     position: relative;
   }

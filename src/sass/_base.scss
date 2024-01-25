@@ -70,7 +70,7 @@ body {
   background-color: #222;
   font-weight: 300;
   color: $white;
-  padding: 0 9.6rem;
+  padding: 3.2rem 9.6rem 3.2rem 9.6rem;
 
   @include respond(tab-landscape) {
     padding: 0 4.8rem;
@@ -78,13 +78,12 @@ body {
 
   @include respond(tab-landscape-small) {
     padding: 0;
-    padding-bottom: 3.6rem;
   }
 }
 
 .container {
   max-width: 1200px;
-  margin: 3.2rem auto;
+  margin: 0 auto 6.4rem auto;
 
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -93,6 +92,7 @@ body {
 
   @include respond(tab-landscape-small) {
     margin: 0;
+    margin-bottom: 4.8rem;
     width: 100%;
     grid-template-columns: 1fr;
   }
