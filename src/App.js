@@ -5,7 +5,7 @@ const API_KEY = "ad8548a2";
 export default function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [movies, setMovies] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState("");
+  const [selectedMovie, setSelectedMovie] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [watchLater, setWatchLater] = useState([]);
 
@@ -30,7 +30,7 @@ export default function App() {
   }
 
   function handleCloseMovie() {
-    setSelectedMovie("");
+    setSelectedMovie(null);
   }
 
   useEffect(
@@ -52,7 +52,6 @@ export default function App() {
 
           if (data.Response === "False") throw new Error("Movie not found");
 
-          console.log(data);
           setMovies(data.Search);
         } catch (err) {
           if (err.name !== "AbortError") console.log(err.message);
@@ -64,7 +63,7 @@ export default function App() {
       if (searchQuery.length < 3) {
         setMovies([]);
       }
-
+      handleCloseMovie();
       fetchMovies();
       return function () {
         controller.abort();
@@ -90,6 +89,7 @@ export default function App() {
             onWatchLater={handleWatchLater}
             watchLater={watchLater}
             onDeleteWatchLater={handleDeleteWatchLater}
+            onCloseMovie={handleCloseMovie}
           />
         ) : (
           <WatchLaterList
@@ -101,6 +101,36 @@ export default function App() {
         )}
       </Box>
     </main>
+  );
+}
+
+function ButtonBack({ onCloseMovie }) {
+  return (
+    <div className="details__back-btn" onClick={onCloseMovie}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 256 256"
+        className="details__back-btn-icon"
+      >
+        <rect width="256" height="256" fill="none" />
+        <polyline
+          points="80 152 32 104 80 56"
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="16"
+        />
+        <path
+          d="M224,200a96,96,0,0,0-96-96H32"
+          fill="none"
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="16"
+        />
+      </svg>
+    </div>
   );
 }
 
@@ -228,6 +258,7 @@ function MovieDetails({
   onWatchLater,
   watchLater,
   onDeleteWatchLater,
+  onCloseMovie,
 }) {
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -236,24 +267,35 @@ function MovieDetails({
     ?.map((movie) => movie.imdbID)
     .includes(selectedID);
 
+  const date = new Date();
+  let added = "";
+  added += `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+
+  const newMovie = {
+    Title: movie.Title,
+    Year: movie.Year,
+    Poster: movie.Poster,
+    Director: movie.Director,
+    Plot: movie.Plot,
+    Runtime: movie.Runtime,
+    imdbID: movie.imdbID,
+    imdbRating: movie.imdbRating,
+    added,
+  };
+
   useEffect(
     function () {
       async function fetchMovieDetails() {
-        try {
-          setIsLoading(true);
-          const res = await fetch(
-            `http://www.omdbapi.com/?apikey=${API_KEY}&i=${selectedID}`
-          );
+        setIsLoading(true);
+        const res = await fetch(
+          `http://www.omdbapi.com/?apikey=${API_KEY}&i=${selectedID}`
+        );
 
-          if (!res.ok) throw new Error("There was an error");
+        if (!res.ok) throw new Error("There was an error");
 
-          const data = await res.json();
-          setMovie(data);
-        } catch (err) {
-          console.log(err.message);
-        } finally {
-          setIsLoading(false);
-        }
+        const data = await res.json();
+        setMovie(data);
+        setIsLoading(false);
       }
       fetchMovieDetails();
     },
@@ -285,6 +327,7 @@ function MovieDetails({
             </div>
           </div>
           <p className="details__description">{movie.Plot}</p>
+          <ButtonBack onCloseMovie={onCloseMovie} />
           {isWatched ? (
             <button
               className="details__add-btn"
@@ -295,7 +338,7 @@ function MovieDetails({
           ) : (
             <button
               className="details__add-btn"
-              onClick={() => onWatchLater(movie)}
+              onClick={() => onWatchLater(newMovie)}
             >
               Add Movie
             </button>
@@ -307,18 +350,15 @@ function MovieDetails({
 }
 
 function Movie({ movie, onSelectMovie }) {
-  const newMovie = {
-    title: movie.Title,
-    image: movie.Poster,
-    released: movie.Year,
-  };
-
   return (
     <div className="movie" onClick={() => onSelectMovie(movie.imdbID)}>
-      <img src={newMovie.image} alt={newMovie.title} className="movie__image" />
+      <img src={movie.Poster} alt={movie.Title} className="movie__image" />
       <div className="movie__info">
-        <p className="movie__title">{newMovie.title}</p>
-        <span className="movie__released">{newMovie.released}</span>
+        <p className="movie__title">{movie.Title}</p>
+        <span className="movie__released">{movie.Year}</span>
+        {movie.added && (
+          <span className="movie__added">Added {movie.added}</span>
+        )}
       </div>
     </div>
   );

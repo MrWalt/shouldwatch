@@ -164,6 +164,12 @@ body {
   margin-top: 0.8rem;
   font-size: 1.6rem;
 }
+.movie__added {
+  display: block;
+  font-size: 1.2rem;
+  margin-top: 0.8rem;
+  font-weight: 400;
+}
 
 .details {
   background-color: #222;
@@ -175,6 +181,26 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+.details__back-btn {
+  background-color: #fff;
+  border-radius: 50%;
+  border: 2px solid #222;
+  width: 3rem;
+  height: 3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(-25%, 25%);
+}
+.details__back-btn-icon {
+  color: #333;
+  width: 2.2rem;
 }
 .details__heading {
   height: 20rem;
