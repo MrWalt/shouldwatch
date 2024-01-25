@@ -24,7 +24,7 @@ export default function App() {
   });
 
   const watchTime = watchLater
-    .map((movie) =>
+    ?.map((movie) =>
       movie.Runtime !== "N/A" ? movie.Runtime.split(" ").at(0) : ""
     )
     .reduce((acc, cur) => acc + Number(cur), 0);
