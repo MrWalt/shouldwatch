@@ -12,7 +12,8 @@ import Footer from "./components/Footer";
 export const API_KEY = "ad8548a2";
 
 const data = [];
-localStorage.setItem("watchLater", JSON.stringify(data));
+if (!localStorage.getItem("watchlater") === "[]")
+  localStorage.setItem("watchLater", JSON.stringify(data));
 
 export default function App() {
   const [searchQuery, setSearchQuery] = useState("");

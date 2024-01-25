@@ -127,6 +127,8 @@
 
   display: flex;
   gap: 0.8rem;
+  position: relative;
+
   cursor: pointer;
 
   &:hover {
@@ -161,10 +163,12 @@
   }
 
   &__added {
-    display: block;
+    display: inline-block;
     font-size: 1.2rem;
-    margin-top: 0.8rem;
-    font-weight: 400;
+    position: absolute;
+    bottom: 0.8rem;
+    right: 1.4rem;
+    font-weight: 500;
   }
 }
 
