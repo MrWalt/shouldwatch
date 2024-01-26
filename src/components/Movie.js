@@ -1,7 +1,15 @@
+import { Link } from "react-scroll";
+
 export default function Movie({ movie, onSelectMovie }) {
   return (
-    <a className="movie__link" href="#later">
-      <div className="movie" onClick={() => onSelectMovie(movie.imdbID)}>
+    <Link
+      to="laterElement"
+      smooth={true}
+      duration={500}
+      delay={100}
+      offset={-15}
+    >
+      <div className="movie" onClick={() => onSelectMovie(movie.imdbID)} to="">
         <img src={movie.Poster} alt={movie.Title} className="movie__image" />
         <div className="movie__info">
           <p className="movie__title">{movie.Title}</p>
@@ -11,6 +19,6 @@ export default function Movie({ movie, onSelectMovie }) {
           )}
         </div>
       </div>
-    </a>
+    </Link>
   );
 }

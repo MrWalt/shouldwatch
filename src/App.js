@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Element } from "react-scroll";
 import Header from "./components/Header";
 import Error from "./components/Error";
 import Loader from "./components/Loader";
@@ -77,7 +78,6 @@ export default function App() {
 
           const data = await res.json();
 
-          console.log(data.Response);
           if (data.Response === "False") throw new Error("Movie not found");
 
           setMovies(data.Search);
@@ -118,27 +118,28 @@ export default function App() {
           {!selectedMovie && (
             <Summary numMovies={watchLater?.length} watchTime={watchTime} />
           )}
-
-          <Box
-            className={`${
-              selectedMovie ? "later later__detail-open" : "later"
-            }`}
-          >
-            {selectedMovie ? (
-              <MovieDetails
-                selectedID={selectedMovie}
-                onWatchLater={handleWatchLater}
-                watchLater={watchLater}
-                onDeleteWatchLater={handleDeleteWatchLater}
-                onCloseMovie={handleCloseMovie}
-              />
-            ) : (
-              <WatchLaterList
-                watchLater={watchLater}
-                onSelectMovie={handleSelectMovie}
-              ></WatchLaterList>
-            )}
-          </Box>
+          <Element name="laterElement">
+            <Box
+              className={`${
+                selectedMovie ? "later later__detail-open" : "later"
+              }`}
+            >
+              {selectedMovie ? (
+                <MovieDetails
+                  selectedID={selectedMovie}
+                  onWatchLater={handleWatchLater}
+                  watchLater={watchLater}
+                  onDeleteWatchLater={handleDeleteWatchLater}
+                  onCloseMovie={handleCloseMovie}
+                />
+              ) : (
+                <WatchLaterList
+                  watchLater={watchLater}
+                  onSelectMovie={handleSelectMovie}
+                ></WatchLaterList>
+              )}
+            </Box>
+          </Element>
         </div>
       </main>
       <Footer />

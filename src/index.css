@@ -256,7 +256,6 @@ body {
   height: 9.2rem;
   border-top: 1px solid #444;
   display: flex;
-  gap: 0.8rem;
   position: relative;
   cursor: pointer;
 }
@@ -269,13 +268,13 @@ body {
 .movie__info {
   width: 100%;
   height: 100%;
+  padding: 1.2rem 0.8rem;
 }
 .movie__image {
   width: 6rem;
   height: 100%;
 }
 .movie__title {
-  margin-top: 0.8rem;
   font-weight: 600;
   font-size: 1.8rem;
 }
