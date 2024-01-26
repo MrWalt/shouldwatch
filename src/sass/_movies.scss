@@ -170,6 +170,13 @@
     right: 1.4rem;
     font-weight: 500;
   }
+
+  &__link:link,
+  &__link:visited {
+    color: inherit;
+    text-decoration: none;
+    scroll-behavior: smooth;
+  }
 }
 
 .details {
