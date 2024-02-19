@@ -154,11 +154,10 @@ body {
 .results,
 .later {
   background-color: #333;
-  border-radius: 8px;
+  border-radius: 4px;
   box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, 0.11);
   width: 40rem;
   height: 64rem;
-  padding: 1.6rem 0;
   overflow: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -181,19 +180,35 @@ body {
   display: none;
 }
 
-.results {
+.results__container {
+  position: relative;
   justify-self: end;
 }
+@media only screen and (max-width: 52em) {
+  .results__container {
+    justify-self: center;
+  }
+}
+
 @media only screen and (max-width: 52em) {
   .results {
     justify-self: center;
   }
 }
+.results a:last-of-type > .movie {
+  border-bottom: 0;
+}
+.results__heading {
+  position: absolute;
+  font-size: 1.8rem;
+  right: 50%;
+  transform: translate(50%, -125%);
+}
 
 .later__summary {
   background-color: #222;
   border: 3px solid #991b1b;
-  border-radius: 8px 8px 0 0;
+  border-radius: 4px 4px 0 0;
   width: 40rem;
   height: 9.2rem;
   padding: 1.6rem 0;
@@ -254,16 +269,13 @@ body {
 
 .movie {
   height: 9.2rem;
-  border-top: 1px solid #444;
+  border-bottom: 1px solid #444;
   display: flex;
   position: relative;
   cursor: pointer;
 }
 .movie:hover {
   background-color: #444;
-}
-.movie:last-child {
-  border-bottom: 1px solid #444;
 }
 .movie__info {
   width: 100%;
@@ -300,7 +312,7 @@ body {
 .details {
   background-color: #222;
   border: 2px solid #991b1b;
-  border-radius: 8px;
+  border-radius: 4px;
   width: 95%;
   height: 100%;
   margin: 0 auto;
@@ -397,7 +409,7 @@ body {
 }
 
 .later {
-  padding: 10.2rem 0 1.6rem 0;
+  padding: 9.2rem 0 1.6rem 0;
 }
 
 .later__detail-open {
