@@ -73,7 +73,7 @@ body {
   padding: 3.2rem 9.6rem 3.2rem 9.6rem;
 
   @include respond(tab-landscape) {
-    padding: 0 4.8rem;
+    padding: 3.2rem 4.8rem;
   }
 
   @include respond(tab-landscape-small) {
